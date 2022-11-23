@@ -6,13 +6,13 @@ private const val Candies = 3
 private const val Finish = 0
 private const val Line = ".........."
 
-val valueFrenchBread = 0.60
-val valueMilkBread = 0.40
-val valueCornBread = 0.50
+const val valueFrenchBread = 0.60
+const val valueMilkBread = 0.40
+const val valueCornBread = 0.50
 
-val frenchBread = "Pão Francês"
-val milkBread = "Pão de Leite"
-val cornBread = "Pão de Milho"
+const val frenchBread = "Pão Francês"
+const val milkBread = "Pão de Leite"
+const val cornBread = "Pão de Milho"
 
 val breads: List<Pair<String, Double>> = listOf(
     Pair(frenchBread, valueFrenchBread),
@@ -35,23 +35,22 @@ val menuBreads = """
     0 - Voltar
 """.trimIndent()
 
-val orderedItems: MutableList<String> = mutableListOf<String>()
+val orderedItems: MutableList<String> = mutableListOf()
 var total: Double = 0.0
 
 fun main () {
     do {
-        var finishOrder = "N"
         principalMenu()
-        if (orderedItems.isEmpty()) {
+        val finishOrder: String = if (orderedItems.isEmpty()) {
             println("Sua comanda está vazia.\nDeseja finalizar sua compra? (S/N)")
-            finishOrder = readln().uppercase()
+            readln().uppercase()
         } else {
             println("=======================Comanda E-Padoca=======================\n")
             orderedItems.forEach { item -> println(item) }
             println()
             println("Valor total - R$ $total\n")
             println("Deseja finalizar seu pedido?")
-            finishOrder = readln().uppercase()
+            readln().uppercase()
         }
     } while (finishOrder != "S")
 }
