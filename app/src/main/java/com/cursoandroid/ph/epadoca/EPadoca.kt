@@ -1,5 +1,5 @@
 package com.cursoandroid.ph.epadoca
-// Variáveis constantes do menu principal
+
 private const val Breads = 1
 private const val Snacks = 2
 private const val Candies = 3
@@ -35,8 +35,10 @@ val menuBreads = """
     0 - Voltar
 """.trimIndent()
 
-val orderedItems: MutableList<String> = mutableListOf()
-var total: Double = 0.0
+var orderedItems: MutableList<String> = mutableListOf()
+var totalOrder: Double = 0.0
+var discount: Double = 0.0
+var discountValid = false
 
 fun main () {
     do {
@@ -45,10 +47,34 @@ fun main () {
             println("Sua comanda está vazia.\nDeseja finalizar sua compra? (S/N)")
             readln().uppercase()
         } else {
-            println("=======================Comanda E-Padoca=======================\n")
-            orderedItems.forEach { item -> println(item) }
-            println()
-            println("Valor total - R$ $total\n")
+            discountValid = false
+            printOrder(discountValid, discount)
+            do{
+                println("Deseja aplicar um cupom de desconto?")
+                var applyDiscount = readln().uppercase()
+                if (applyDiscount == "S"){
+                    println("Digite seu cupom de desconto:")
+                    when (readln().uppercase()) {
+                        "5PADOCA" -> {
+                            discount = totalOrder * 0.05
+                            applyDiscount = "N"
+                            discountValid = true
+                        }
+                        "10PADOCA" -> {
+                            discount = totalOrder * 0.10
+                            applyDiscount = "N"
+                            discountValid = true
+                        }
+                        "5OFF" -> {
+                            discount = 5.00
+                            applyDiscount = "N"
+                            discountValid = true
+                        }
+                        else -> println("Cupom de desconto inválido!")
+                    }
+                }
+                printOrder(discountValid, discount)
+            } while (applyDiscount != "N")
             println("Deseja finalizar seu pedido?")
             readln().uppercase()
         }
@@ -88,7 +114,7 @@ fun registerRequest (product: Pair<String, Double>) {
     val totalItems = amount * product.second
     val item = orderedItem(product.first, amount, product.second, totalItems)
     orderedItems.add(item)
-    total += totalItems
+    totalOrder += totalItems
 }
 
 fun orderedItem (
@@ -97,3 +123,17 @@ fun orderedItem (
     unitValue: Double,
     total: Double
 ): String = "${orderedItems.size.inc()}$Line$product$Line$amount$Line$unitValue${Line}R$ $total"
+
+fun printOrder ( validDiscount: Boolean, setDiscount: Double) {
+    if (validDiscount) {
+        println("=======================Comanda E-Padoca=======================\n")
+        orderedItems.forEach { item -> println(item) }
+        println()
+        println("Valor total - R$ $totalOrder - R$ $setDiscount = R$ ${totalOrder - setDiscount}\n")
+    } else {
+        println("=======================Comanda E-Padoca=======================\n")
+        orderedItems.forEach { item -> println(item) }
+        println()
+        println("Valor total - R$ $totalOrder\n")
+    }
+}
