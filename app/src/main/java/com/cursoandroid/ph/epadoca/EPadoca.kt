@@ -9,15 +9,38 @@ private const val Line = ".........."
 const val valueFrenchBread = 0.60
 const val valueMilkBread = 0.40
 const val valueCornBread = 0.50
+const val valueChickenSnack = 5.00
+const val valueEsfirra = 6.00
+const val valueCheeseBread = 4.50
+const val valueCarolina = 2.00
+const val valuePudding = 4.00
+const val valueBrigadier = 3.50
 
 const val frenchBread = "Pão Francês"
 const val milkBread = "Pão de Leite"
 const val cornBread = "Pão de Milho"
+const val chickenSnack = "Coxinha"
+const val esfirra = "Esfirra"
+const val cheeseBread = "Pão de queijo"
+const val carolina = "Carolina"
+const val pudding = "Pudim"
+const val brigadier = "Brigadeiro"
 
 val breads: List<Pair<String, Double>> = listOf(
     Pair(frenchBread, valueFrenchBread),
     Pair(milkBread, valueMilkBread),
     Pair(cornBread, valueCornBread)
+)
+val snacks: List<Pair<String, Double>> = listOf(
+    Pair(chickenSnack, valueChickenSnack),
+    Pair(esfirra, valueEsfirra),
+    Pair(cheeseBread, valueCheeseBread)
+)
+
+val candies: List<Pair<String, Double>> = listOf(
+    Pair(carolina, valueCarolina),
+    Pair(pudding, valuePudding),
+    Pair(brigadier, valueBrigadier)
 )
 
 val categorys = """
@@ -32,6 +55,20 @@ val menuBreads = """
     1 - $frenchBread...........R$ $valueFrenchBread
     2 - $milkBread..........R$ $valueMilkBread
     3 - $cornBread..........R$ $valueCornBread
+    0 - Voltar
+""".trimIndent()
+
+val menuSnacks = """
+    1 - $chickenSnack...........R$ $valueChickenSnack
+    2 - $esfirra..........R$ $valueEsfirra
+    3 - $cheeseBread..........R$ $valueCheeseBread
+    0 - Voltar
+""".trimIndent()
+
+val menuCandies = """
+    1 - $carolina...........R$ $valueCarolina
+    2 - $pudding..........R$ $valuePudding
+    3 - $brigadier..........R$ $valueBrigadier
     0 - Voltar
 """.trimIndent()
 
@@ -89,6 +126,8 @@ fun principalMenu () {
         val category = readln().toInt()
         when (category) {
             Breads -> categoryMenu(menuBreads, breads)
+            Snacks -> categoryMenu(menuSnacks, snacks)
+            Candies -> categoryMenu(menuCandies, candies)
             else -> Unit
         }
     } while (category != Finish)
